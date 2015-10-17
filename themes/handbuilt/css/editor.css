@@ -1,0 +1,21 @@
+body.mceContentBody {
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
+	font-size: 12px;
+	line-height:16px;
+	width:650px;
+	padding:40px;
+	background:#eee;
+}
+
+.work-title {
+	font-weight:bold;
+}
+
+.work-cited {
+	font-weight:bold;
+}
+
+.note {
+	font-style:italic;
+	color:#33c;
+}

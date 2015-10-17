@@ -1,0 +1,62 @@
+; Drupal's .info files allow themers to easily specify some of the static
+; properties of your theme. Properties such as its name, stylesheets,
+; javascripts, and block regions.
+;
+; Drupal 7 stores a cache of the data in this .info files. If you modify any
+; lines in this file, you MUST refresh Drupal 7's cache by simply visiting the
+; Appearance page at admin/appearance.
+
+
+
+; The name, description and screenshot used for this theme on the Appearance
+; page at admin/appearance.
+
+screenshot  = screenshot.png
+name        = Electronic Book Review 5.0 Theme
+description = This is the new Handbuilt theme.
+
+core        = 7.x
+
+
+regions[header-primary]           = Primary header
+regions[header-secondary]         = Secondary header
+regions[content-primary]          = Primary content
+regions[content-sidebar-left]     = Left sidebar content
+regions[content-sidebar-right]    = Right sidebar content
+regions[footer]    				  = Footer
+regions[content] 				  = Content (not used but required by D7)
+
+
+; This section adds CSS files to your theme. The media type is specified in
+; the brackets. Typical CSS media types include "all", "screen", "print", and
+; "handheld". See http://www.w3.org/TR/CSS21/media.html#media-types for a full
+; list of stylesheet media types in CSS 2.1.
+;
+; You can also override or remove any module's stylesheets, an extremely
+; useful feature. See the excellent Drupal 7 Theme Guide at
+; http://drupal.org/node/263967 for more details.
+
+stylesheets[print][]      = css/print.css
+stylesheets[all][]        = css/thread-colors.css
+stylesheets[all][]        = css/handbuilt.css
+
+; Example of adding handheld stylesheets. The iPhone's preferred media type
+; is based on the CSS3 Media queries. http://www.w3.org/TR/css3-mediaqueries/
+
+;stylesheets[handheld][]  = css/mobile.css
+;stylesheets[only screen and (max-device-width: 480px)][] = css/iphone.css
+
+; Add conditional stylesheets that are processed by IE. See the css/README.txt.
+
+; To target all versions of IE with an ie.css, uncomment the following line:
+;stylesheets-conditional[IE][all][]       = css/ie.css
+stylesheets-conditional[lte IE 7][all][]  = css/ie7.css
+stylesheets-conditional[lte IE 6][all][]  = css/ie6.css
+
+
+
+; Optionally add some JavaScripts to your theme.
+
+scripts[] = js/regions.js
+scripts[] = js/essay.js
+scripts[] = js/forms.js

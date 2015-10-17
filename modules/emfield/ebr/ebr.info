@@ -1,0 +1,7 @@
+name = ebr
+description = Custom functionality for ebr 5
+package = Electronic Book Review
+core = 7.x
+dependencies[] = field
+dependencies[] = node_reference
+files[] = ebr.module

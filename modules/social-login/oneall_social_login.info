@@ -1,0 +1,13 @@
+name = "OneAll Social Login"
+description = Allows your users to register and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google and Yahoo 
+package = "OneAll Social Login"
+core = 7.x
+configure = admin/config/people/oneall_social_login
+dependencies[] = "oneall_social_login_core"
+
+; Information added by Drupal.org packaging script on 2014-04-22
+version = "7.x-1.6"
+core = "7.x"
+project = "social-login"
+datestamp = "1398160732"
+

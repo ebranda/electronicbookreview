@@ -1,0 +1,36 @@
+<?php
+
+function ebr_maintenance_admin() {
+  $form = array();
+  $form['ebr_maintenance_maintenance_mode'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Put site in maintenance mode'),
+    '#default_value' => variable_get('ebr_maintenance_maintenance_mode', 0),
+  );
+  $form['ebr_maintenance_maintenance_mode_msg'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Maintenance mode warning message'),
+    '#default_value' => variable_get('ebr_maintenance_maintenance_mode_msg', ''),
+  );
+  return system_settings_form($form);
+}
+
+
+function ebr_maintenance_menu() {
+  $items = array();
+  $items['admin/settings/ebr-maintenance'] = array(
+    'title' => 'Maintenance',
+    'description' => '',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ebr_maintenance_admin'),
+    'access arguments' => array('administer ebr maintenance settings'),
+    'type' => MENU_NORMAL_ITEM,
+   );
+  return $items;
+}
+
+function ebr_maintenance_preprocess_page(&$variables, $hook) {
+	if (user_is_logged_in() && variable_get('ebr_maintenance_maintenance_mode') === 1) {
+		drupal_set_message('<h1 style="margin:0;">WARNING</h1>'.variable_get('ebr_maintenance_maintenance_mode_msg'), 'warning');
+	}
+}

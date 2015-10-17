@@ -1,0 +1,578 @@
+<?php
+
+global $debug;
+
+function ebr_import_run_batch() {
+  //ebr_import_workflow_all_published();
+  //ebr_import_essay_keywords();
+  //ebr_import_gloss_xpath_to_jquery();
+}
+
+function ebr_import_gloss_xpath_to_jquery() {
+  $results = db_query("SELECT nid FROM node WHERE type = 'gloss'");
+  $count = 0;
+  foreach ($results as $record) {
+    $gloss = node_load($record->nid);
+    $xpath = $gloss->field_gloss_path['und'][0]['value'];
+    $pos = substr($xpath, strrpos($xpath, 'p') + 2);
+    $pos = substr($pos, 0, strpos($pos, ']'));
+    $pos = intval($pos) - 1; // jquery is zero-indexed while xpath is not
+    //$jquery = '.node-essay .field-name-body p:eq('.$pos.')';
+    $gloss->field_gloss_path['und'][0]['value'] = $pos;    
+    node_save($gloss);
+    $count++;
+  }
+  dpm("Updated $count nodes");
+}
+
+function ebr_import_workflow_all_published() {
+  $results = db_query("SELECT nid FROM node WHERE type = 'essay'");
+  $count = 0;
+  foreach ($results as $record) {
+    $nid = $record->nid;
+    $essay = node_load($nid);
+    $essay->workflow = "6";
+    node_save($essay);
+    $count++;
+  }
+  dpm("Updated $count nodes");
+}
+
+function ebr_import_essay_keywords() {
+  
+  // Connect to the ebr 4 db
+  $src_db = mysql_connect("localhost", "root", "", true) or die(mysql_error());
+  mysql_select_db('ebr_4', $src_db);
+  
+  // Load essay records
+  $legacy_essays = _ebr_import_load_table('essays', 'id', $src_db);
+  
+  $results = db_query("SELECT nid FROM node WHERE type = 'essay'");
+  foreach ($results as $record) {
+    $essay = node_load($record->nid);
+    foreach ($legacy_essays as $legacy_essay) {
+      if ($essay->field_name['und'][0]['value'] == $legacy_essay['name'] && $essay->title == $legacy_essay['title']) {
+        _ebr_import_keywords_to_tags($legacy_essay['keywords'], $essay);
+        node_save($essay);
+        dpm("Updated essay $essay->nid (".$legacy_essay['keywords'].")");
+      }
+    }
+  }
+  
+}
+
+function ebr_node_resave_do($type) {
+  $results = db_query("SELECT nid FROM {node} WHERE type='$type'");
+  foreach ($results as $record) {
+    $node = node_load($record->nid);
+    if (!empty($node)) {
+      $node->body[$node->language][0]['summary'] = '';
+      node_save($node);
+    }
+  }
+}
+
+function ebr_import_do() {
+
+  // To back up from command line: mysqldump -u root ebr_5 > ebr_5.sql (into ebr-5-data-backups directory)
+    
+  // Set globals
+  global $debug;
+  $debug = FALSE;
+  $essay_throttle = 10;
+  
+  $nodereference_map = array();
+  $legacy_pk_map = array();
+  
+  // Connect to the ebr 4 db
+  $src_db = mysql_connect("localhost", "root", "", true) or die(mysql_error());
+  mysql_select_db('ebr_4', $src_db);
+  
+  // Load all data into memory (we are only dealing with a small amount of data)
+  $threads = _ebr_import_load_table('threads', 'name', $src_db);
+  $glosses = _ebr_import_load_table('glosses', 'id', $src_db);
+  $essays = _ebr_import_load_table('essays', 'id', $src_db);
+  $author_bios = _ebr_import_load_table('author_bios', 'id', $src_db);
+  $essay_secondary_affiliations = _ebr_import_load_table('essay_secondary_affiliations', 'id', $src_db);
+  $gatherings = _ebr_import_load_table('gatherings', 'id', $src_db);
+  $gathering_essays = _ebr_import_load_table('gathering_essays', 'id', $src_db);
+  $p2p_reviews = _ebr_import_load_table('p2p_reviews', 'id', $src_db);
+  $reviewed_books = _ebr_import_load_table('reviewed_books', 'id', $src_db);
+  $users = _ebr_import_load_table('users', 'username', $src_db);
+  
+  
+  /////////////////////////////////////
+  // Create authors from thread originaleditor and currenteditor (split ", " delimited lists)
+  /////////////////////////////////////
+  foreach ($threads as $thread_name => $fields) {
+    $author_names = explode(', ', $fields['originaleditor']);
+    foreach ($author_names as $author_name) {
+      $nid = _ebr_import_create_author($author_name, $author_bios);
+      if (!empty($nid)) {
+        $nodereference_map['thread_name_original_editor_nid'][$thread_name][] = $nid;
+      }
+    }
+    $author_names = explode(', ', $fields['currenteditor']);
+    foreach ($author_names as $author_name) {
+      $nid = _ebr_import_create_author($author_name, $author_bios);
+      if (!empty($nid)) {
+        $nodereference_map['thread_name_current_editor_nid'][$thread_name][] = $nid;
+      }
+    }
+  }
+  dpm("Imported authors from threads.");
+  
+  /////////////////////////////////////
+  // Create authors from gatherings (split ", " delimited lists)
+  /////////////////////////////////////
+  foreach ($gatherings as $id => $fields) {
+    $author_names = explode(', ', $fields['author']);
+    foreach ($author_names as $author_name) {
+      $nid = _ebr_import_create_author($author_name, $author_bios);
+      if (!empty($nid)) {
+        $nodereference_map['gathering_id_author_nid'][$id][] = $nid;
+      }
+    }
+  }
+  dpm("Imported authors from gatherings.");
+
+  /////////////////////////////////////
+  // Create authors from glosses
+  /////////////////////////////////////
+  foreach ($glosses as $gloss) {
+    $author_names = explode(', ', $gloss['author']);
+    foreach ($author_names as $author_name) {
+      $nid = _ebr_import_create_author($author_name, $author_bios);
+      if (!empty($nid)) {
+        $nodereference_map['gloss_id_author_nid'][$gloss['id']] = $nid;
+      }
+    }
+  }
+  dpm("Imported authors from glosses.");
+  
+  
+  /////////////////////////////////////
+  // Create authors from essays (check author1, author2, author3, author4, author5; split " and " delimited lists within each field)
+  /////////////////////////////////////
+  $essay_count = 0;
+  foreach ($essays as $essay_id => $fields) {
+    if ($debug) {
+      $essay_count++;
+      if ($essay_count > 10) break;
+    }
+    $author_names = explode(' and ', $fields['author1']);
+    array_merge($author_names, explode(' and ', $fields['author2']));
+    array_merge($author_names, explode(' and ', $fields['author3']));
+    array_merge($author_names, explode(' and ', $fields['author4']));
+    array_merge($author_names, explode(' and ', $fields['author5']));
+    foreach ($author_names as $author_name) {
+      $author_name = trim($author_name);
+      if (!empty($author_name)) {
+        $nid = _ebr_import_create_author($author_name, $author_bios);
+        if (!empty($nid)) {
+          $nodereference_map['essay_id_author_nid'][$essay_id][] = $nid;
+        }
+      }
+    }
+  }
+  dpm("Imported authors from essays.");
+  
+  /////////////////////////////////////
+  // Create Threads
+  /////////////////////////////////////
+  foreach ($threads as $thread_name => $fields) {
+    $thread = _ebr_import_create_node(array(
+      'type'=>'thread', 
+      'title'=>$fields['title'],
+      'body'=> $fields['blurb'],
+    ));  
+    $legacy_pk_map['threads'][$fields['id']] = $thread->nid;
+    $thread->field_name['und'][0]['value'] = $fields['name'];
+    $thread->field_color['und'][0]['value'] = $fields['color'];
+    $thread->field_color_2['und'][0]['value'] = $fields['color2'];
+    if (isset($nodereference_map['thread_name_original_editor_nid'][$thread_name])) {
+      foreach ($nodereference_map['thread_name_original_editor_nid'][$thread_name] as $editor_nid) {
+        $thread->field_original_editor['und'][] = array('nid' => $editor_nid);
+      }
+    }
+    if (isset($nodereference_map['thread_name_current_editor_nid'][$thread_name])) {
+      foreach ($nodereference_map['thread_name_current_editor_nid'][$thread_name] as $editor_nid) {
+        $thread->field_current_editor['und'][] = array('nid' => $editor_nid);
+      }
+    }
+    $thread->field_publication_date['und'][0]['value'] = $fields['date_published'];
+    _ebr_import_keywords_to_tags($fields['keywords'], $thread);
+    _ebr_import_save_node($thread);
+  }
+  dpm("Created threads.");
+  
+  /////////////////////////////////////
+  // Create essays
+  /////////////////////////////////////
+  $essay_count = 0;
+  foreach ($essays as $id => $fields) {
+    if ($debug) {
+      $essay_count++;
+      if ($essay_count > $essay_throttle) break;
+    }
+    $thread_nid = $legacy_pk_map['threads'][$fields['thread_id']];
+    $thread = node_load($thread_nid);
+    $thread_name = $thread->field_name['und'][0]['value'];
+    $essay = _ebr_import_create_node(array(
+      'type'=>'essay', 
+      'title'=> $fields['title'],
+      'summary' => $fields['blurb'],
+      'body'=> _ebr_import_load_essay_body($thread_name, $fields['name']),
+      'format' => 'full_html',
+    ));
+    $legacy_pk_map['essays'][$id] = $essay->nid;
+    if (isset($nodereference_map['essay_id_author_nid'][$id])) {
+      foreach ($nodereference_map['essay_id_author_nid'][$id] as $author_nid) {
+        $essay->field_author['und'][] = array('nid' => $author_nid);
+      } 
+    }
+    $essay->field_name['und'][0]['value'] = $fields['name'];
+    $essay->field_thread['und'][0]['nid'] = $thread_nid;
+    foreach ($essay_secondary_affiliations as $id2 => $fields2) {
+      if ($id == $fields2['essay_id']) {
+        $thread_nid = $legacy_pk_map['threads'][$fields2['thread_id']];
+        $essay->field_secondary_thread['und'][] = array('nid' => $thread_nid);
+      }
+    }
+    $essay->field_publication_date['und'][0]['value'] = $fields['date_published'];
+    $essay->field_source_url['und'][0] = array(
+      'url' => $fields['external_url'], // Need to test with enfolded/inciting
+    );
+    _ebr_import_keywords_to_tags($fields['keywords'], $essay);
+    _ebr_import_save_node($essay);
+  }
+  foreach ($essays as $id => $fields) { 
+    // Ripostes
+    if (!empty($fields['parent_id'])) {
+      $essay = node_load($legacy_pk_map['essays'][$id]);
+      $parent_id = $fields['parent_id'];
+      $essay->field_riposte_to['und'][0]['nid'] = $legacy_pk_map['essays'][$parent_id];
+      _ebr_import_save_node($essay);
+    }
+  }
+  dpm("Created essays.");
+  
+  
+  /////////////////////////////////////
+  // Create Glosses
+  /////////////////////////////////////
+  foreach ($glosses as $id => $fields) {
+    $essay_nid = $legacy_pk_map['essays'][$fields['essay_id']];
+    $essay = node_load($essay_nid);
+    $gloss = _ebr_import_create_node(array(
+      'type'=>'gloss', 
+      'title'=> 'Gloss on '.$essay->title,
+      'body'=> $fields['body'],
+      'format' => 'full_html',
+    ));
+    $gloss->field_gloss_path['und'][0]['value'] = $fields['xpointer'];
+    $gloss->field_author['und'][0]['nid'] = $nodereference_map['gloss_id_author_nid'][$id];
+    $gloss->field_essay['und'][0]['nid'] = $essay_nid;
+    $gloss->field_publication_date['und'][0]['value'] = $fields['date_published'];
+    _ebr_import_save_node($gloss);
+    $legacy_pk_map['glosses'][$id] = $gloss->nid;
+  }
+  dpm("Created glosses.");
+  
+  /////////////////////////////////////
+  // Create Gatherings
+  /////////////////////////////////////
+  foreach ($gatherings as $id => $fields) {
+    $gathering = _ebr_import_create_node(array(
+      'type'=>'gathering', 
+      'title'=> $fields['title'],
+      'body'=> $fields['description'],
+      'format' => 'full_html',
+    ));    
+    if (isset($nodereference_map['gathering_id_author_nid'][$id])) {
+      foreach ($nodereference_map['gathering_id_author_nid'][$id] as $author_nid) {
+        $gathering->field_author['und'][] = array('nid' => $author_nid);
+      } 
+    }
+    $gathering->field_publication_date['und'][0]['value'] = $fields['date_published'];
+    foreach ($gathering_essays as $id2 => $fields2) {
+      if ($fields2['gathering_id'] == $id) {
+        $essay_nid = $legacy_pk_map['essays'][$fields2['essay_id']];
+        $gathering->field_gathering_essay['und'][] = array('nid' => $essay_nid);
+      }
+    }
+    _ebr_import_save_node($gathering);
+  }
+  dpm("Created gatherings.");
+  
+  /////////////////////////////////////
+  // Create Users
+  /////////////////////////////////////
+  $legacy_user_map = array();
+  foreach ($users as $username => $fields) {
+    $account = new stdClass();
+    $account->is_new = true;
+    $data = array(
+      'name' => $fields['username'],
+      'pass' => $fields['password'],
+      'mail' => $fields['username'],
+      'status' => 0,
+      'init' => $fields['username'],
+      'roles' => array(
+        '1' => $fields['usergroup'] == 'admin' ? 'administrator' : $fields['usergroup'],
+      ),
+    );
+    $new_user = user_save($account, $data);
+    $name = $fields['displayname'];
+    $new_user->field_display_name['und'][0]['value'] = $name;
+    $author_nid = db_next_id(db_query("SELECT nid FROM {node} WHERE title='$name' AND type='author'")->fetchField());
+    if (!empty($author_nid)) {
+      $new_user->field_author['und'][0]['nid'] = $author_nid;
+    }
+    user_save($new_user);
+  } 
+  dpm("Created users.");
+  
+  /////////////////////////////////////
+  // Create Reviewed Books
+  /////////////////////////////////////
+  foreach ($reviewed_books as $id => $fields) {
+    $book = _ebr_import_create_node(array(
+      'type'=>'reviewed_book', 
+      'title'=> $fields['title'],
+      'body'=> '',
+      'format' => 'filtered_html',
+    ));
+    $book->field_book_author['und'][0]['value'] = $fields['author'];
+    $book->field_bibliographic['und'][0]['value'] = $fields['bibliographic'];
+    if (!empty($fields['essay_id'])) {
+      $essay = node_load($legacy_pk_map['essays'][$fields['essay_id']]);
+      if (!empty($essay)) {
+        $book->field_essay['und'][0]['nid'] = $essay->nid;
+      }
+    }
+    _ebr_import_save_node($book);
+  }
+  dpm("Created reviewed books.");
+  
+  /////////////////////////////////////
+  // Create P2P Reviews
+  /////////////////////////////////////
+  foreach ($p2p_reviews as $id => $fields) {
+    if (isset($legacy_pk_map['essays'][$fields['essay_id']])) {
+      $essay_nid = $legacy_pk_map['essays'][$fields['essay_id']];
+      $essay = node_load($essay_nid);
+    }
+    $review = _ebr_import_create_node(array(
+      'type'=>'p2p_review', 
+      'title'=> isset($essay) ? $essay->title : 'Missing essay',
+      'body'=> $fields['comments'],
+      'format' => 'filtered_html',
+    ));
+    //$review->field_user['und'][0]['uid'] = $legacy_user_map[$fields['username']];
+    if (isset($essay)) {
+      $review->field_essay['und'][] = array('nid' => $essay_nid);
+    } else {
+      dpm("P2P review [$id] bad essay reference");
+    }
+    $review->field_reviewer_name['und'][0]['value'] = $fields['reviewer_name'];
+    $review->field_reviewer_recommendation['und'][0]['value'] = $fields['rejected'] == 1 ? 0 : 2;
+    _ebr_import_save_node($review);
+  }
+  dpm("Created reviews.");
+  
+  
+  /// DONE
+}
+
+
+
+
+
+////////////////// UTILITIES ////////////////// 
+
+function _ebr_import_keywords_to_tags($keyword_string, &$node) {
+  $keywords = explode(',', $keyword_string);
+  $node->field_tags['und'] = array();
+  foreach ($keywords as $keyword) {
+    $existing = taxonomy_term_load_multiple(array(), array('name' => trim($keyword), 'vid' => 1));
+    if (empty($existing)) {
+      $term = new stdClass();
+      $term->name = trim($keyword);
+      $term->vid = 1;
+      taxonomy_term_save($term);
+    } else {
+      $term = array_shift($existing);
+    }
+    $node->field_tags['und'][] = array('tid' => $term->tid);
+  }
+}
+
+function _ebr_import_load_essay_body($thread_name, $essay_name) {
+  $base = getcwd().'/sites/all/modules/ebr/ebr_import/ebressays'; 
+  $path = $base.'/'.$thread_name.'/'.$essay_name.'.html';
+  $html = file_get_contents($path);
+  if (!empty($html)) {
+    $opening = '<div id="main">';
+    $html = substr($html, strpos($html, $opening) + strlen($opening));
+    $closing = '</div>';
+    $html = substr($html, 0, strrpos($html, $closing));
+    $html = _ebr_import_replace_image_paths($html);
+    $html = utf8_encode(trim($html));
+    return $html;
+  }
+  return 'Not set.';
+}
+
+function _ebr_import_replace_image_paths($html) {
+  $chunks = explode('<img ', $html);
+  if (count($chunks) < 2) return $html;
+  $processed = '';
+  $i = 0;
+  foreach ($chunks as $chunk) {
+    if ($i++ == 0) {
+      $processed .= $chunk;
+    } else {
+      $processed .= '<img ';
+      $path_start = strpos($chunk, 'src=')+5;
+      $processed .= substr($chunk, 0, $path_start);
+      $path = substr($chunk, $path_start, strpos($chunk, '.') - $path_start);
+      $path = substr($path, strrpos($path, '/'));
+      $processed .= '../../sites/default/files/essays'.$path;
+      $processed .= substr($chunk, strpos($chunk, '.'));
+    }
+  }
+  return $processed;
+}
+
+function _ebr_import_tidy_obs($html) {
+  /* Disable: adds errors (See, for example, firstperson/patient)
+  $file = rand(0, 10000); // Give us a new random filename
+  file_put_contents("/temp/$file", $html);
+  shell_exec("tidy -m -asxhtml --show-body-only yes /temp/$file"); // Do "man tidy" from shell to see other options
+  $good_html = file_get_contents("/temp/$file");
+  unlink("/temp/$file"); // Clean up after ourselves
+  */
+  $good_html = $html;
+  $good_html = str_replace("\n", " ", $good_html);
+  $good_html = str_replace("  ", " ", $good_html);
+  return $good_html;
+}
+
+function _ebr_import_create_author($author_name, $author_bios) {
+  if (empty($author_name)) return;
+  $author_name = str_replace("'", "\'", $author_name);
+  $query = db_query("SELECT nid FROM node WHERE title = '$author_name'");
+  $nid = $query->fetchField();
+  if (empty($nid)) {
+    foreach ($author_bios as $bio) {
+      if ($bio['name'] == $author_name && !empty($bio['bio'])) {
+        $author_bio = $bio['bio'];
+        break;
+      }
+    }
+    $node = _ebr_import_create_node(array(
+      'type'=>'author', 
+      'title'=>$author_name, 
+      'body'=> (isset($author_bio) ? $author_bio : ''),
+    ));
+    $nid = $node->nid;
+  } else {
+    //dpm("IGNORING $author_name");
+  }
+  return $nid;
+}
+
+function _ebr_import_load_table($table_name, $key_name, $src_db) {
+  $data = array();
+  $result = mysql_query("SELECT * FROM $table_name", $src_db) or die(mysql_error());
+  while ($row = mysql_fetch_array($result)) {
+    foreach ($row as $key => $value) {
+      if (!is_numeric($key)) {
+        $data[$row[$key_name]][$key] = utf8_encode($value);
+      }
+    }
+  }
+  return $data;
+}
+
+global $i;
+$i = 1;
+
+function _ebr_import_create_node($fields) {
+  $node = new stdClass();
+  $node->type = $fields['type'];
+  node_object_prepare($node);
+  $node->title = $fields['title'];
+  // Clean up the title (convert <i> to <em> since the filter_xss function used in
+  // the ebr_title module does not support the <i> tag)
+  $illegal = array('<i>', '</i>', '<I>', '</I>');
+  $legal = array('<em>', '</em>', '<em>', '</em>');
+  $node->title = str_replace($illegal, $legal, $node->title);
+  $node->language = LANGUAGE_NONE;
+  $node->body[$node->language][0]['value']   = $fields['body'];
+  $node->body[$node->language][0]['summary'] = empty($fields['summary']) ? text_summary($fields['body']) : $fields['summary'];
+  $node->body[$node->language][0]['format']  = empty($fields['format']) ? 'filtered_html' : $fields['format'];
+  if (!empty($fields['path'])) {
+    $node->path = array('alias' => $fields['path']);
+  }
+  global $debug;
+  if ($debug) {
+    global $i;
+    $node->nid = $i; 
+    $i++;
+  } else {
+    node_save($node);
+  }
+  return $node;
+}
+
+function _ebr_import_save_node($node) { 
+  global $debug;
+  if (!$debug) {
+    node_save($node);
+  }
+}
+
+function ebr_import_menu() {
+  $items = array();
+	$items['admin/content/ebr-import'] = array(
+		'title' => t('Run import'),
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('ebr_import_run_form'), 
+		'access arguments' => array('administer content'),
+		'type' => MENU_NORMAL_ITEM,
+	);
+	$items['ebrimport-complete'] = array(
+		'page callback' => 'ebr_import_complete',
+		'access arguments' => array('administer content'),
+		'type' => MENU_NORMAL_ITEM,
+	);
+  return $items;
+}
+
+function ebr_import_run_form() {
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Proceed',
+  );
+  return $form;
+}
+
+function ebr_import_run_form_submit() {
+  drupal_set_message("Running import...");
+  ebr_import_run_batch();
+  drupal_set_message("Done.");
+  drupal_goto('ebrimport-complete');
+}
+
+function ebr_import_complete() {
+  return 'Import completed. '.l('Run again', 'admin/content/ebr-import');
+}
+
+function ebr_import_prepare_url_name($string) {
+  $machine_name = str_replace(' ', '-', drupal_strtolower($string));
+  // Remove characters not valid in function names.
+  $machine_name = preg_replace('/[^a-z0-9\-]/', '', $machine_name);
+  return $machine_name;
+}

@@ -1,0 +1,340 @@
+/**********************************************
+Writing under constraint - wuc 
+**********************************************/
+.thread-wuc.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-wuc.thread-color {
+	color:#9999cc;
+}
+.region-header-secondary .thread-wuc,
+.thread-wuc .region-content-sidebar-left .content,
+.thread-wuc .thread-background {
+	background-color:#9999cc;
+}
+.thread-wuc .t {
+    border-bottom: 8px solid #9999cc;
+}
+.thread-wuc .marginalia.thread-background .arrow {
+    border-right: 25px solid #9999cc;
+}
+.thread-wuc.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #9999cc, #adadd7 2%, #d0d0e9 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #9999cc, #adadd7 2%, #d0d0e9 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #9999cc, #adadd7 2%, #d0d0e9 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #9999cc, #adadd7 2%, #d0d0e9 15%, white 28%); /* Standard syntax */
+}
+
+
+/*********************************************
+Music/sound/noise - musicsoundnoise 
+**********************************************/
+.thread-musicsoundnoise.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-musicsoundnoise.thread-color {
+	color:#CCCC33;
+}
+.region-header-secondary .thread-musicsoundnoise,
+.thread-musicsoundnoise .region-content-sidebar-left .content,
+.thread-musicsoundnoise .thread-background {
+	background-color:#CCCC33;
+}
+.thread-musicsoundnoise .t {
+    border-bottom: 8px solid #CCCC33;
+}
+.thread-musicsoundnoise .marginalia.thread-background .arrow {
+    border-right: 25px solid #CCCC33;
+}
+.thread-musicsoundnoise.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #CCCC33, #d9d95a 2%, #f3f3ca 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #CCCC33, #d9d95a 2%, #f3f3ca 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #CCCC33, #d9d95a 2%, #f3f3ca 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #CCCC33, #d9d95a 2%, #f3f3ca 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+Image and Narrative - imagenarrative 
+**********************************************/
+.thread-imagenarrative.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-imagenarrative.thread-color {
+	color:#999900;
+}
+.region-header-secondary .thread-imagenarrative,
+.thread-imagenarrative .region-content-sidebar-left .content,
+.thread-imagenarrative .thread-background {
+	background-color:#999900;
+}
+.thread-imagenarrative .t {
+    border-bottom: 8px solid #999900;
+}
+.thread-imagenarrative .marginalia.thread-background .arrow {
+    border-right: 25px solid #999900;
+}
+.thread-imagenarrative.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #999900, #adad27 2%, #f4f4ab 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #999900, #adad27 2%, #f4f4ab 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #999900, #adad27 2%, #f4f4ab 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #999900, #adad27 2%, #f4f4ab 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+Web arts - webarts 
+**********************************************/
+.thread-webarts.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-webarts.thread-color {
+	color:#FF6633;
+}
+.region-header-secondary .thread-webarts,
+.thread-webarts .region-content-sidebar-left .content,
+.thread-webarts .thread-background {
+	background-color:#FF6633;
+}
+.thread-webarts .t {
+    border-bottom: 8px solid #FF6633;
+}
+.thread-webarts .marginalia.thread-background .arrow {
+    border-right: 25px solid #FF6633;
+}
+.thread-webarts.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #FF6633, #fc8862 2%, #fccebf 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #FF6633, #fc8862 2%, #fccebf 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #FF6633, #fc8862 2%, #fccebf 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #FF6633, #fc8862 2%, #fccebf 15%, white 28%); /* Standard syntax */
+}
+
+
+/********************************************** 
+Critical Ecologies - criticalecologies 
+**********************************************/
+.thread-criticalecologies.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-criticalecologies.thread-color {
+	color:#669933;
+}
+.region-header-secondary .thread-criticalecologies,
+.thread-criticalecologies .region-content-sidebar-left .content,
+.thread-criticalecologies .thread-background {
+	background-color:#669933;
+}
+.thread-criticalecologies .t {
+    border-bottom: 8px solid #669933;
+}
+.thread-criticalecologies .marginalia.thread-background .arrow {
+    border-right: 25px solid #669933;
+}
+.thread-criticalecologies.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #669933, #82b252 2%, #cbe7af 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #669933, #82b252 2%, #cbe7af 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #669933, #82b252 2%, #cbe7af 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #669933, #82b252 2%, #cbe7af 15%, white 28%); /* Standard syntax */
+}
+
+
+/********************************************** 
+End Construction - endconstruction 
+**********************************************/
+.thread-endconstruction.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-endconstruction.thread-color {
+	color:#cc9933;
+}
+.region-header-secondary .thread-endconstruction,
+.thread-endconstruction .region-content-sidebar-left .content,
+.thread-endconstruction .thread-background {
+	background-color:#cc9933;
+}
+.thread-endconstruction .t {
+    border-bottom: 8px solid #cc9933;
+}
+.thread-endconstruction .marginalia.thread-background .arrow {
+    border-right: 25px solid #cc9933;
+}
+.thread-endconstruction.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #cc9933, #c9a150 2%, #ead2a1 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #cc9933, #c9a150 2%, #ead2a1 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #cc9933, #c9a150 2%, #ead2a1 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #cc9933, #c9a150 2%, #ead2a1 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+Internet Nation - internetnation 
+**********************************************/
+.thread-internetnation.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-internetnation.thread-color {
+	color:#CC9966;
+}
+.region-header-secondary .thread-internetnation,
+.thread-internetnation .region-content-sidebar-left .content,
+.thread-internetnation .thread-background {
+	background-color:#CC9966;
+}
+.thread-internetnation .t {
+    border-bottom: 8px solid #CC9966;
+}
+.thread-internetnation .marginalia.thread-background .arrow {
+    border-right: 25px solid #CC9966;
+}
+.thread-internetnation.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #CC9966, #d4ad85 2%, #e7d6c5 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #CC9966, #d4ad85 2%, #e7d6c5 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #CC9966, #d4ad85 2%, #e7d6c5 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #CC9966, #d4ad85 2%, #e7d6c5 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+Electropoetics - electropoetics 
+**********************************************/
+.thread-electropoetics.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-electropoetics.thread-color {
+	/*color:#66CCFF;*/
+	color:#55bbee;
+}
+.region-header-secondary .thread-electropoetics,
+.thread-electropoetics .region-content-sidebar-left .content,
+.thread-electropoetics .thread-background {
+	/*background-color:#66CCFF;*/
+	background-color:#55bbee;
+}
+.thread-electropoetics .t {
+    border-bottom: 8px solid #55bbee;
+}
+.thread-electropoetics .marginalia.thread-background .arrow {
+    border-right: 25px solid #55bbee;
+}
+.thread-electropoetics.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #55bbee, #78c8f0 2%, #cde6f3 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #55bbee, #78c8f0 2%, #cde6f3 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #55bbee, #78c8f0 2%, #cde6f3 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #55bbee, #78c8f0 2%, #cde6f3 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+Writing post-feminism - writingpostfeminism 
+**********************************************/
+.thread-writingpostfeminism.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-writingpostfeminism.thread-color {
+	color:#ff3300;
+}
+.region-header-secondary .thread-writingpostfeminism,
+.thread-writingpostfeminism .region-content-sidebar-left .content,
+.thread-writingpostfeminism .thread-background {
+	background-color:#ff3300;
+}
+.thread-writingpostfeminism .t {
+    border-bottom: 8px solid #ff3300;
+}
+.thread-writingpostfeminism .marginalia.thread-background .arrow {
+    border-right: 25px solid #ff3300;
+}
+.thread-writingpostfeminism.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #ff3300, #fb6743 2%, #fed5ca 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #ff3300, #fb6743 2%, #fed5ca 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #ff3300, #fb6743 2%, #fed5ca 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #ff3300, #fb6743 2%, #fed5ca 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+Technocapitalism - technocapitalism 
+**********************************************/
+.thread-technocapitalism.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-technocapitalism.thread-color {
+	/*color:#5CD785;*/
+	color:#52bf77;
+}
+.region-header-secondary .thread-technocapitalism,
+.thread-technocapitalism .region-content-sidebar-left .content,
+.thread-technocapitalism .thread-background {
+	background-color:#52bf77;
+}
+.thread-technocapitalism .t {
+    border-bottom: 8px solid #52bf77;
+}
+.thread-technocapitalism .marginalia.thread-background .arrow {
+    border-right: 25px solid #52bf77;
+}
+.thread-technocapitalism.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #52bf77, #79d799 2%, #d7f5e1 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #52bf77, #79d799 2%, #d7f5e1 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #52bf77, #79d799 2%, #d7f5e1 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #52bf77, #79d799 2%, #d7f5e1 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+First Person - firstperson 
+**********************************************/
+.thread-firstperson.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-firstperson.thread-color {
+	color:#729FFF;
+}
+.region-header-secondary .thread-firstperson,
+.thread-firstperson .region-content-sidebar-left .content,
+.thread-firstperson .thread-background {
+	background-color:#729FFF;
+}
+.thread-firstperson .t {
+    border-bottom: 8px solid #729FFF;
+}
+.thread-firstperson .marginalia.thread-background .arrow {
+    border-right: 25px solid #729FFF;
+}
+.thread-firstperson.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #729FFF, #91b4fe 2%, #d8e4fd 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #729FFF, #91b4fe 2%, #d8e4fd 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #729FFF, #91b4fe 2%, #d8e4fd 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #729FFF, #91b4fe 2%, #d8e4fd 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+Fictions Present - fictionspresent 
+**********************************************/
+.thread-fictionspresent.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-fictionspresent.thread-color {
+	color:#dd7788;
+}
+.region-header-secondary .thread-fictionspresent,
+.thread-fictionspresent .region-content-sidebar-left .content,
+.thread-fictionspresent .thread-background {
+	background-color:#dd7788;
+}
+.thread-fictionspresent .t {
+    border-bottom: 8px solid #dd7788;
+}
+.thread-fictionspresent .marginalia.thread-background .arrow {
+    border-right: 25px solid #dd7788;
+}
+.thread-fictionspresent.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #dd7788, #dd8f9c 2%, #efd9dc 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #dd7788, #dd8f9c 2%, #efd9dc 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #dd7788, #dd8f9c 2%, #efd9dc 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #dd7788, #dd8f9c 2%, #efd9dc 15%, white 28%); /* Standard syntax */
+}
+
+
+/**********************************************
+Enfolded - enfolded 
+**********************************************/
+.thread-enfolded.node-type-thread .region-content-primary-wrapper h2.page-title,
+.thread-enfolded.thread-color {
+	color:#979da4;
+}
+.region-header-secondary .thread-enfolded,
+.thread-enfolded .region-content-sidebar-left .content,
+.thread-enfolded .thread-background {
+	background-color:#979da4;
+}
+.thread-enfolded .t {
+    border-bottom: 8px solid #979da4;
+}
+.thread-enfolded .marginalia.thread-background .arrow {
+    border-right: 25px solid #979da4;
+}
+.thread-enfolded.node-type-thread .region-content-primary-wrapper {
+	background: -webkit-linear-gradient(left, #979da4, #a7aeb4 2%, #e1e3e5 15%, white 28%); /* For Safari */
+	background: -o-linear-gradient(right, #979da4, #a7aeb4 2%, #e1e3e5 15%, white 28%); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(right, #979da4, #a7aeb4 2%, #e1e3e5 15%, white 28%); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(to right, #979da4, #a7aeb4 2%, #e1e3e5 15%, white 28%); /* Standard syntax */
+}
+

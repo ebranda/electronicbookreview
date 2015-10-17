@@ -1,0 +1,6 @@
+name = ebr_import
+description = Imports data from EBR 4 to EBR 5
+package = Electronic Book Review
+core = 7.x
+
+files[] = ebr_import.module

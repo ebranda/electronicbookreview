@@ -1,0 +1,13 @@
+name = EBR Glossing
+description = Adds gloss functionality to EBR site
+package = Electronic Book Review
+core = 7.x
+
+files[] = ebr_glossing.module
+
+dependencies[] = markdown
+dependencies[] = dialog
+
+scripts[] = scripts.js
+
+stylesheets[all][] = styles.css

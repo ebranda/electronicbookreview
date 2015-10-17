@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * Implementation of hook_preprocess_html().
+ * Strip escaped html from the html head title.
+ */
+function ebr_title_preprocess_html(&$vars) {
+  // Only strip em tags for now
+  $tags = array(
+    '&lt;em&gt;', '&lt;/em&gt;',
+    '&lt;EM&gt;', '&lt;/EM&gt;',
+  );
+  $vars['head_title'] = str_replace($tags, '', $vars['head_title']);
+}
+
+/**
+ * Implementation of hook_preprocess_page().
+ * Unescape html, but only for legal markup.
+ */
+function ebr_title_preprocess_page(&$vars) {
+	/*	
+	if (isset($vars['node'])) {
+		$page_title = filter_xss($vars['node']->title);
+		switch ($vars['node']->type) {
+			case 'thread':
+			case 'author':
+			case 'gathering':
+			case 'reviewed_book':
+			case 'gloss':
+			case 'p2p_review':
+				$prefix = node_type_get_type($vars['node'])->name;
+				$page_title = $vars['node']->title;
+				break;
+		}
+	} else if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(2) > 0) {
+		$term = taxonomy_term_load(arg(2));
+		$prefix = 'Tag';
+		$page_title = filter_xss($term->name);
+	}
+	if (isset($prefix)) {
+		$page_title = '<strong class="prefix">'.$prefix.': </strong>' . $page_title;
+	}
+	$vars['title'] = $page_title;
+	*/
+}
+
+/**
+ * Implementation of hook_preprocess_node().
+ * Unescape html, but only for legal markup.
+ */
+function ebr_title_preprocess_node(&$vars) {
+  $vars['title'] = filter_xss($vars['node']->title);
+}
+
+/**
+ * Implementation of hook_views_post_execute().
+ * Remove markup from node titles.
+ */
+function ebr_title_views_post_execute(&$view) {
+  foreach ($view->result as $result) {
+    if (isset($result->node_title)) {
+      $result->node_title = _ebr_title_strip_markup($result->node_title);
+    }
+  }
+}
+
+/**
+ * Helper function to remove markup from a string.
+ * Only supports the <em> tag for now.
+ */
+function _ebr_title_strip_markup($str) {
+  $elements = array(
+    '<em>', '</em>',
+  );
+  return str_replace($elements, '', $str);
+}

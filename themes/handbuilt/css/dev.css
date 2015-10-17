@@ -1,0 +1,71 @@
+
+#main {
+	width:500px;
+	margin-top:50px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family:arial;
+	font-size:0.9em;
+}
+
+.node {
+	background:#ddd;
+	padding:10px;
+}
+
+.referrable {
+	position:relative; /* to allow for positioning of children */
+}
+
+.marginalia {
+	position:absolute;
+	top:-5px;
+	left:525px;
+	width:250px;
+	min-height:35px;
+	padding:5px;
+	background:#000;
+	color:white;
+	font-size:11px;
+	font-weight:normal;
+	font-family:courier;
+	-moz-box-shadow:5px 5px 5px rgba(0,0,0,0.2);
+	-webkit-box-shadow:5px 5px 5px rgba(0,0,0,0.2);
+	box-shadow:5px 5px 5px rgba(0,0,0,0.2);
+}
+
+.marginalia.backgrounded {
+	background:#999;
+}
+
+.marginalia.note {
+	background:#f22;
+	top:-10px;
+	left:520px;
+	opacity:0.9;
+}
+
+.backgrounded a:hover {
+	text-decoration:none;
+}
+
+.marginalia .arrow {
+	height: 0;
+	width: 0;
+	position:absolute;
+	top:0;
+	left:-25px;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 25px solid #000;
+	font-size: 0;
+	line-height: 0;
+}
+
+.marginalia.note .arrow {
+	border-right: 25px solid #f22;
+}
+
+.marginalia.backgrounded .arrow {
+	border-right: 25px solid #999;
+}

@@ -1,0 +1,16 @@
+name = Content Publish
+description = Custom Maestro functions for the Content Publish Workflow
+package = Maestro
+version = 7.x-1.0-dev
+core = 7.x
+dependencies[] = maestro
+files[] = content_publish.module
+
+
+
+; Information added by drupal.org packaging script on 2013-06-06
+version = "7.x-1.4"
+core = "7.x"
+project = "maestro"
+datestamp = "1370523957"
+
