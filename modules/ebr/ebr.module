@@ -382,7 +382,8 @@ function ebr_preprocess_node(&$variables, $hook) {
 
 function _ebr_render_field($node, $field_name, $display_mode=NULL) {
 	if (isset($node->$field_name)) {
-		return render(field_view_field('node', $node, $field_name, $display_mode));
+		$field = field_view_field('node', $node, $field_name, $display_mode);
+		return render($field);
 	}
 }
 
