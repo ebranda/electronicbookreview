@@ -2061,7 +2061,7 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 2,
       ),
     ),
     'entity_type' => 'node',
@@ -2109,7 +2109,7 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
     ),
     'entity_type' => 'node',
     'field_name' => 'field_author',
-    'label' => 'Curator',
+    'label' => 'Editor',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -2136,7 +2136,7 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
       ),
     ),
     'deleted' => 0,
-    'description' => 'Check this box if the gathering is the currently featured one.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -2229,10 +2229,17 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
         'weight' => 2,
       ),
       'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 2,
+        'label' => 'hidden',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'date_only_no_time_',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ),
+        'type' => 'date_default',
+        'weight' => 1,
       ),
     ),
     'entity_type' => 'node',
@@ -3548,12 +3555,10 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
   t('Biography');
   t('Body');
   t('Book author');
-  t('Check this box if the gathering is the currently featured one.');
   t('Color');
   t('Color 2');
   t('Comment');
   t('Comments');
-  t('Curator');
   t('Current editor');
   t('Current editor user account');
   t('Current editor\'s introduction');
@@ -3563,6 +3568,7 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
   t('Display name');
   t('Draft Essay');
   t('ETA');
+  t('Editor');
   t('Editor of record');
   t('Enter the color in hexadecimal format (e.g. #996633)');
   t('Essay');

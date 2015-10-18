@@ -21,6 +21,7 @@
 	/*---"Markup" font---*/
 	.markup,
 	.field-name-field-publication-date,
+	.node-gathering .field-name-field-author.field-label-inline,
 	.region-content-sidebar-right .field-name-field-tags .field-item,
 	.block-social-share,
 	.node-essay.full .field-name-field-body-summary,
@@ -417,9 +418,31 @@
 }
 
 .region-content-sidebar-right .field {
-	margin-top:10px;
+	/*margin-top:10px;
 	border-top:2px solid black;
-	padding-top:5px;
+	padding-top:5px;*/
+}
+
+.region-content-sidebar-right #block-views-featured-gathering-block h2 {
+	text-transform:lowercase;
+	font-size:16px;
+}
+
+.region-content-sidebar-right #block-views-featured-gathering-block .node h2 {
+	text-transform:none;
+	font-size:12px;
+	line-height:1.2em;
+	margin-top:2em;
+	margin-bottom:2px;
+}
+
+.region-content-sidebar-right #block-views-featured-gathering-block .node a {
+	text-decoration:underline;
+}
+
+.region-content-sidebar-right #block-views-featured-gathering-block .node .field-label {
+	font-family:courier, sans-serif;
+	font-weight:normal;
 }
 
 
@@ -502,8 +525,21 @@
 }
 
 
-.page-node.node-type-essay #main .region-content-primary-wrapper .page-title {
+.page-node.node-type-essay #main .region-content-primary-wrapper .page-title,
+.page-node.node-type-gathering #main .region-content-primary-wrapper .page-title {
 	display:none;
+}
+
+.page-node.node-type-gathering #main .field-name-field-gathering-essay {
+	margin-top:3em;
+}
+
+.page-node.node-type-gathering #main .field-name-field-gathering-essay .field-label {
+	margin-bottom:1em;
+}
+
+.node-essay.node-teaser .field-name-body p {
+	margin:0;
 }
 
 .region-content-primary .node-essay > h2,

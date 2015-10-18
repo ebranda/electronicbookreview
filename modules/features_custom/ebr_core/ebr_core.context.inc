@@ -114,6 +114,12 @@ function ebr_core_context_default_contexts() {
           'region' => 'content-sidebar-left',
           'weight' => '-10',
         ),
+        'views-featured_gathering-block' => array(
+          'module' => 'views',
+          'delta' => 'featured_gathering-block',
+          'region' => 'content-sidebar-right',
+          'weight' => '-10',
+        ),
       ),
     ),
   );
