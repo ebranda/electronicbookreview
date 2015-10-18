@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the EBR Core feature.
+ */
+
+include_once 'ebr_core.features.inc';
