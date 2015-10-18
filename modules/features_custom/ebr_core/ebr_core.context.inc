@@ -152,23 +152,23 @@ function ebr_core_context_default_contexts() {
           'region' => 'header-secondary',
           'weight' => '-10',
         ),
+        'social_share-social_share' => array(
+          'module' => 'social_share',
+          'delta' => 'social_share',
+          'region' => 'header-secondary',
+          'weight' => '-9',
+        ),
         'views-thread_links-block_1' => array(
           'module' => 'views',
           'delta' => 'thread_links-block_1',
           'region' => 'header-secondary',
-          'weight' => '-9',
+          'weight' => '-8',
         ),
         'search-form' => array(
           'module' => 'search',
           'delta' => 'form',
           'region' => 'header-secondary',
-          'weight' => '-8',
-        ),
-        'social_share-social_share' => array(
-          'module' => 'social_share',
-          'delta' => 'social_share',
-          'region' => 'content-sidebar-right',
-          'weight' => '-10',
+          'weight' => '-7',
         ),
         'ebr-ohp_logo' => array(
           'module' => 'ebr',

@@ -22,7 +22,7 @@
 	.markup,
 	.field-name-field-publication-date,
 	.region-content-sidebar-right .field-name-field-tags .field-item,
-	.region-content-sidebar-right .block-social-share a,
+	.block-social-share,
 	.node-essay.full .field-name-field-body-summary,
 	.region-content-primary .node-essay .workflow-current-state,
 	.ds-search-extra strong {
@@ -222,6 +222,21 @@
     border-left: 24px solid black;
 }
 
+.social-share {
+	position:relative;
+	top:18px;
+	left:6px;
+}
+.block-social-share {
+	display:inline-block;
+	margin-left:10px;
+}
+.block-social-share a {
+	/*display:block;*/
+	margin-right:10px;
+	color:black;
+}
+
 
 
 /*---CONTENT - GLOBAL ---*/
@@ -407,9 +422,7 @@
 	padding-top:5px;
 }
 
-.region-content-sidebar-right .block-social-share a {
-	display:block;
-}
+
 
 
 
