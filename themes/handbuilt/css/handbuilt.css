@@ -605,6 +605,7 @@
 .region-content-primary .node-essay > h2,
 .region-content-primary .node-essay .field-name-field-author {
 	font-size: 22px;
+	line-height:1em;
 	margin:0;
 }
 
