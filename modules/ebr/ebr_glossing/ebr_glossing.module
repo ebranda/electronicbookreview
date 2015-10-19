@@ -116,7 +116,8 @@ function _glosser_format_glosses($groups) {
 		$output .= '<div class="gloss-path-group">';
 		$output .= 		'<div class="path" style="display:none;">'.$path.'</div>';
 		foreach ($glosses as $gloss) {
-			$output .= '   '.render(node_view($gloss, 'teaser'));
+			$gloss_view = node_view($gloss, 'teaser');
+			$output .= '   '.render($gloss_view);
 		}
 		$output .= '</div><!--/ gloss-path-group -->';
 	}
