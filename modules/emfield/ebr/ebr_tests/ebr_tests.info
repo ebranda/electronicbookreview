@@ -1,6 +1,0 @@
-name = ebr_tests
-description = A free-form test module
-package = Electronic Book Review
-core = 7.x
-
-files[] = ebr_tests.module

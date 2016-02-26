@@ -8,6 +8,4 @@ files[] = ebr_glossing.module
 dependencies[] = markdown
 dependencies[] = dialog
 
-scripts[] = scripts.js
-
 stylesheets[all][] = styles.css

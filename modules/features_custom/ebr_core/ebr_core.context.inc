@@ -64,6 +64,12 @@ function ebr_core_context_default_contexts() {
   $context->reactions = array(
     'block' => array(
       'blocks' => array(
+        'system-main' => array(
+          'module' => 'system',
+          'delta' => 'main',
+          'region' => 'content-primary',
+          'weight' => '-10',
+        ),
         'ebr-essay_thread_essays' => array(
           'module' => 'ebr',
           'delta' => 'essay_thread_essays',

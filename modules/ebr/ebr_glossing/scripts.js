@@ -10,7 +10,7 @@ jQuery(window).load(function(){
 
 
 function Glosser() {
-	if (typeof Drupal.settings.ebr_glossing.glossLeft == 'undefined') {
+	if (typeof Drupal.settings.ebr_glossing == 'undefined') {
 		this.glossLeft = -1;
 	} else {
 		this.glossLeft = Drupal.settings.ebr_glossing.glossLeft;

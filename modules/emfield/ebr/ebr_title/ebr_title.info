@@ -1,6 +1,0 @@
-name = ebr_title
-description = Special handling for html, page, and node titles
-package = Electronic Book Review
-core = 7.x
-
-files[] = ebr_title.module

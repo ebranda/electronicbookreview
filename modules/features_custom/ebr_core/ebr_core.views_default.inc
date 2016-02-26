@@ -69,7 +69,7 @@ function ebr_core_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
-  /* Field: Content: Authors */
+  /* Field: Content: Editor */
   $handler->display->display_options['fields']['field_author']['id'] = 'field_author';
   $handler->display->display_options['fields']['field_author']['table'] = 'field_data_field_author';
   $handler->display->display_options['fields']['field_author']['field'] = 'field_author';
@@ -120,7 +120,7 @@ function ebr_core_views_default_views() {
   );
   $handler->display->display_options['filters']['field_publication_date_value']['granularity'] = 'year';
   $handler->display->display_options['filters']['field_publication_date_value']['year_range'] = '1995:+0';
-  /* Filter criterion: Content: Authors (field_author) */
+  /* Filter criterion: Content: Editor (field_author) */
   $handler->display->display_options['filters']['field_author_nid']['id'] = 'field_author_nid';
   $handler->display->display_options['filters']['field_author_nid']['table'] = 'field_data_field_author';
   $handler->display->display_options['filters']['field_author_nid']['field'] = 'field_author_nid';
@@ -390,7 +390,7 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['fields']['field_bibliographic']['field'] = 'field_bibliographic';
   $handler->display->display_options['fields']['field_bibliographic']['label'] = '';
   $handler->display->display_options['fields']['field_bibliographic']['element_label_colon'] = FALSE;
-  /* Field: Content: Related essay */
+  /* Field: Content: Review essay */
   $handler->display->display_options['fields']['field_essay']['id'] = 'field_essay';
   $handler->display->display_options['fields']['field_essay']['table'] = 'field_data_field_essay';
   $handler->display->display_options['fields']['field_essay']['field'] = 'field_essay';
@@ -486,7 +486,7 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['fields']['field_bibliographic']['field'] = 'field_bibliographic';
   $handler->display->display_options['fields']['field_bibliographic']['label'] = '';
   $handler->display->display_options['fields']['field_bibliographic']['element_label_colon'] = FALSE;
-  /* Field: Content: Related essay */
+  /* Field: Content: Review essay */
   $handler->display->display_options['fields']['field_essay']['id'] = 'field_essay';
   $handler->display->display_options['fields']['field_essay']['table'] = 'field_data_field_essay';
   $handler->display->display_options['fields']['field_essay']['field'] = 'field_essay';
@@ -511,7 +511,7 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'book' => 'book',
   );
-  /* Filter criterion: Content: Related essay (field_essay) */
+  /* Filter criterion: Content: Review essay (field_essay) */
   $handler->display->display_options['filters']['field_essay_nid']['id'] = 'field_essay_nid';
   $handler->display->display_options['filters']['field_essay_nid']['table'] = 'field_data_field_essay';
   $handler->display->display_options['filters']['field_essay_nid']['field'] = 'field_essay_nid';
@@ -659,7 +659,7 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['sorts']['field_gloss_path_value']['id'] = 'field_gloss_path_value';
   $handler->display->display_options['sorts']['field_gloss_path_value']['table'] = 'field_data_field_gloss_path';
   $handler->display->display_options['sorts']['field_gloss_path_value']['field'] = 'field_gloss_path_value';
-  /* Contextual filter: Content: Related essay (field_essay) */
+  /* Contextual filter: Content: Review essay (field_essay) */
   $handler->display->display_options['arguments']['field_essay_nid']['id'] = 'field_essay_nid';
   $handler->display->display_options['arguments']['field_essay_nid']['table'] = 'field_data_field_essay';
   $handler->display->display_options['arguments']['field_essay_nid']['field'] = 'field_essay_nid';
@@ -734,7 +734,7 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['sorts']['title']['id'] = 'title';
   $handler->display->display_options['sorts']['title']['table'] = 'node';
   $handler->display->display_options['sorts']['title']['field'] = 'title';
-  /* Contextual filter: Content: Related essay (field_essay) */
+  /* Contextual filter: Content: Review essay (field_essay) */
   $handler->display->display_options['arguments']['field_essay_nid']['id'] = 'field_essay_nid';
   $handler->display->display_options['arguments']['field_essay_nid']['table'] = 'field_data_field_essay';
   $handler->display->display_options['arguments']['field_essay_nid']['field'] = 'field_essay_nid';
@@ -869,7 +869,7 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  /* Field: Content: Authors */
+  /* Field: Content: Editor */
   $handler->display->display_options['fields']['field_author']['id'] = 'field_author';
   $handler->display->display_options['fields']['field_author']['table'] = 'field_data_field_author';
   $handler->display->display_options['fields']['field_author']['field'] = 'field_author';
@@ -989,7 +989,7 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  /* Field: Content: Authors */
+  /* Field: Content: Editor */
   $handler->display->display_options['fields']['field_author']['id'] = 'field_author';
   $handler->display->display_options['fields']['field_author']['table'] = 'field_data_field_author';
   $handler->display->display_options['fields']['field_author']['field'] = 'field_author';
@@ -1050,7 +1050,7 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Content: Authors (field_author) */
+  /* Contextual filter: Content: Editor (field_author) */
   $handler->display->display_options['arguments']['field_author_nid']['id'] = 'field_author_nid';
   $handler->display->display_options['arguments']['field_author_nid']['table'] = 'field_data_field_author';
   $handler->display->display_options['arguments']['field_author_nid']['field'] = 'field_author_nid';
@@ -1241,14 +1241,14 @@ function ebr_core_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'Featured gatherings';
+  $view->human_name = 'Featured gathering';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Featured gatherings';
+  $handler->display->display_options['title'] = 'Featured gathering';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -1265,11 +1265,11 @@ function ebr_core_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Sort criterion: Content: Publication date (field_publication_date) */
-  $handler->display->display_options['sorts']['field_publication_date_value']['id'] = 'field_publication_date_value';
-  $handler->display->display_options['sorts']['field_publication_date_value']['table'] = 'field_data_field_publication_date';
-  $handler->display->display_options['sorts']['field_publication_date_value']['field'] = 'field_publication_date_value';
-  $handler->display->display_options['sorts']['field_publication_date_value']['order'] = 'DESC';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -1308,7 +1308,7 @@ function ebr_core_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Essays in this gathering';
+  $handler->display->display_options['title'] = 'Thread essays';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';

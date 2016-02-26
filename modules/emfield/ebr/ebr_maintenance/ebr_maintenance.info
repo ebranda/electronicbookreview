@@ -1,6 +1,0 @@
-name = EBR Maintenance
-description = Provides tools for site maintenance
-package = Electronic Book Review
-core = 7.x
-
-files[] = ebr_maintenance.module

@@ -53,7 +53,7 @@ function ebr_glossing_preprocess_node(&$variables, $hook) {
 		if (is_numeric($gloss_left)) {
 			$settings['glossLeft'] = $gloss_left;
 		}
-		
+		drupal_add_js('scripts.js');
 		drupal_add_js(array('ebr_glossing' => $settings), 'setting');
 		$variables['classes_array'][] = 'glossable';
 		$glosses = _glosser_load_glosses($node->nid);
