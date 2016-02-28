@@ -8,7 +8,7 @@
  * Implements hook_field_group_info().
  */
 function ebr_core_field_group_info() {
-  $export = array();
+  $field_groups = array();
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -41,7 +41,11 @@ function ebr_core_field_group_info() {
       'formatter' => 'collapsible',
     ),
   );
-  $export['group_workflow|node|essay|form'] = $field_group;
+  $field_groups['group_workflow|node|essay|form'] = $field_group;
 
-  return $export;
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Solicited essay notes');
+
+  return $field_groups;
 }

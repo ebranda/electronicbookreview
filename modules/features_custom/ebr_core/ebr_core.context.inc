@@ -64,6 +64,12 @@ function ebr_core_context_default_contexts() {
   $context->reactions = array(
     'block' => array(
       'blocks' => array(
+        'ebr-node_tags' => array(
+          'module' => 'ebr',
+          'delta' => 'node_tags',
+          'region' => 'content-primary',
+          'weight' => '10',
+        ),
         'ebr-essay_thread_essays' => array(
           'module' => 'ebr',
           'delta' => 'essay_thread_essays',
@@ -102,12 +108,6 @@ function ebr_core_context_default_contexts() {
   $context->reactions = array(
     'block' => array(
       'blocks' => array(
-        'views-recent_essays-block' => array(
-          'module' => 'views',
-          'delta' => 'recent_essays-block',
-          'region' => 'content-primary',
-          'weight' => '-10',
-        ),
         'ebr-site_summary' => array(
           'module' => 'ebr',
           'delta' => 'site_summary',
