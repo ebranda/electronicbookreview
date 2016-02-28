@@ -7,9 +7,9 @@ dependencies[] = service_links
 version = VERSION
 files[] = swedish_services.module
 
-; Information added by Drupal.org packaging script on 2014-07-03
-version = "7.x-2.3-beta1+4-dev"
+; Information added by Drupal.org packaging script on 2015-04-18
+version = "7.x-2.3"
 core = "7.x"
 project = "service_links"
-datestamp = "1404397430"
+datestamp = "1429348386"
 
