@@ -223,16 +223,16 @@
     border-left: 24px solid black;
 }
 
-.social-share {
+#header .social-share {
 	position:relative;
 	top:18px;
 	left:6px;
 }
-.block-social-share {
+#header .block-social-share {
 	display:inline-block;
 	margin-left:10px;
 }
-.block-social-share a {
+#header .block-social-share a {
 	/*display:block;*/
 	margin-right:10px;
 	color:black;
@@ -266,7 +266,7 @@
 	z-index:-1000;
 	height:2000px;
 	width:910px;
-	padding:160px 0 100px 77px;
+	padding:40px 0 100px 77px;
 }
 
 #main .grid-background .row {
@@ -423,6 +423,7 @@
 	padding-top:5px;*/
 }
 
+/*
 .region-content-sidebar-right #block-views-featured-gathering-block h2 {
 	text-transform:lowercase;
 	font-size:16px;
@@ -443,6 +444,47 @@
 .region-content-sidebar-right #block-views-featured-gathering-block .node .field-label {
 	font-family:courier, sans-serif;
 	font-weight:normal;
+}
+*/
+
+.region-content-sidebar-right .social-share {
+	height:140px;
+	padding-top:20px;
+}
+
+.region-content-sidebar-right .social-share .content a {
+	display:block;
+}
+
+.front .region-content-sidebar-right {
+	padding-top:40px;
+}
+
+.region-content-sidebar-right h2 {
+	font-size:12px;
+	line-height:1.2em;
+	margin-bottom:20px;
+}
+
+.region-content-sidebar-right .content .node-teaser,
+.region-content-sidebar-right .content .node-teaser h2 {
+	font-size:12px;
+	line-height:1.2em;
+	margin:0;
+}
+
+.region-content-sidebar-right .content .node-teaser {
+	margin-bottom:20px;
+}
+
+.region-content-sidebar-right .content .node-teaser .field-label {
+	font-weight:normal;
+	text-transform:lowercase;
+}
+
+.region-content-sidebar-right .content .node-teaser .field-name-field-author .field-item {
+	font-family:"Karla", arial, helvetica, sans-serif;
+	font-weight:bold;
 }
 
 
@@ -503,6 +545,28 @@
 	text-decoration:underline;
 }
 
+
+.region-content-primary .social-share {
+	display:inline-block;
+	margin-bottom:1.5em;
+}
+.region-content-primary .social-share .share-label {
+	font-size:12px;
+	font-weight:bold;
+}
+.region-content-primary .block-social-share {
+	display:inline-block;
+	margin-left:10px;
+}
+.region-content-primary .social-share a {
+	/*display:block;*/
+	margin-right:10px;
+	color:black;
+	text-decoration:none;
+}
+.region-content-primary .social-share a:hover {
+	text-decoration:underline;
+}
 
 
 .region-content-primary .views-row .views-field-title {

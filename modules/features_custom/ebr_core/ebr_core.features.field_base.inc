@@ -542,11 +542,16 @@ function ebr_core_field_default_field_bases() {
     'settings' => array(
       'referenceable_types' => array(
         'author' => 0,
-        'enfolded_essay' => 0,
+        'book' => 0,
+        'contributors' => 0,
         'essay' => 'essay',
         'gathering' => 0,
         'gloss' => 0,
+        'internal_text' => 0,
+        'issue' => 0,
+        'p2p_review' => 0,
         'page' => 0,
+        'poll' => 0,
         'thread' => 0,
       ),
       'view' => array(

@@ -18,29 +18,31 @@ function ebr_title_preprocess_html(&$vars) {
  * Unescape html, but only for legal markup.
  */
 function ebr_title_preprocess_page(&$vars) {
-	/*	
+	/*
 	if (isset($vars['node'])) {
 		$page_title = filter_xss($vars['node']->title);
 		switch ($vars['node']->type) {
-			case 'thread':
-			case 'author':
+			//case 'thread':
+			//case 'author':
+			//case 'reviewed_book':
+			//case 'gloss':
+			//case 'p2p_review':
 			case 'gathering':
-			case 'reviewed_book':
-			case 'gloss':
-			case 'p2p_review':
 				$prefix = node_type_get_type($vars['node'])->name;
 				$page_title = $vars['node']->title;
 				break;
 		}
 	} else if (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2)) && arg(2) > 0) {
-		$term = taxonomy_term_load(arg(2));
-		$prefix = 'Tag';
-		$page_title = filter_xss($term->name);
+		// $term = taxonomy_term_load(arg(2));
+		// 		$prefix = 'Tag';
+		// 		$page_title = filter_xss($term->name);
 	}
 	if (isset($prefix)) {
 		$page_title = '<strong class="prefix">'.$prefix.': </strong>' . $page_title;
 	}
-	$vars['title'] = $page_title;
+	if (isset($page_title)) {
+		$vars['title'] = $page_title;
+	}
 	*/
 }
 
@@ -50,6 +52,19 @@ function ebr_title_preprocess_page(&$vars) {
  */
 function ebr_title_preprocess_node(&$vars) {
   $vars['title'] = filter_xss($vars['node']->title);
+	if ($vars['view_mode'] == 'full') {
+		switch ($vars['node']->type) {
+			//case 'thread':
+			//case 'author':
+			//case 'reviewed_book':
+			//case 'gloss':
+			//case 'p2p_review':
+			case 'gathering':
+				$prefix = node_type_get_type($vars['node'])->name;
+				$vars['title'] = '<span class="prefix">'.$prefix.': </span>' . $vars['title'];
+				break;
+		}
+	}
 }
 
 /**

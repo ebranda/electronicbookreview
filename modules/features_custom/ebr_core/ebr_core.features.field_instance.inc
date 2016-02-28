@@ -2109,7 +2109,7 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
     ),
     'entity_type' => 'node',
     'field_name' => 'field_author',
-    'label' => 'Editor',
+    'label' => 'Collected by',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -2177,9 +2177,12 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'label' => 'hidden',
+        'module' => 'node_reference',
+        'settings' => array(
+          'node_reference_view_mode' => 'teaser',
+        ),
+        'type' => 'node_reference_node',
         'weight' => 3,
       ),
       'teaser' => array(
@@ -2191,7 +2194,7 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
     ),
     'entity_type' => 'node',
     'field_name' => 'field_gathering_essay',
-    'label' => 'Essays',
+    'label' => 'Essays in this gathering',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -3555,6 +3558,7 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
   t('Biography');
   t('Body');
   t('Book author');
+  t('Collected by');
   t('Color');
   t('Color 2');
   t('Comment');
@@ -3568,11 +3572,10 @@ Emphasis in text: Select text and click <b>“I” icon in toolbar</b><br />
   t('Display name');
   t('Draft Essay');
   t('ETA');
-  t('Editor');
   t('Editor of record');
   t('Enter the color in hexadecimal format (e.g. #996633)');
   t('Essay');
-  t('Essays');
+  t('Essays in this gathering');
   t('Featured');
   t('If this issue is a bug, please provide as much information as possible about what you were doing when the bug occurred (including the page URL copied from the web browser) so the bug can be re-created.');
   t('Image Slideshow');

@@ -33,7 +33,7 @@ function ebr_core_context_default_contexts() {
           'module' => 'views',
           'delta' => 'essays_by_author-block',
           'region' => 'content-primary',
-          'weight' => '-10',
+          'weight' => '-9',
         ),
       ),
     ),
@@ -64,21 +64,15 @@ function ebr_core_context_default_contexts() {
   $context->reactions = array(
     'block' => array(
       'blocks' => array(
-        'system-main' => array(
-          'module' => 'system',
-          'delta' => 'main',
-          'region' => 'content-primary',
-          'weight' => '-10',
-        ),
         'ebr-essay_thread_essays' => array(
           'module' => 'ebr',
           'delta' => 'essay_thread_essays',
           'region' => 'content-sidebar-left',
           'weight' => '-10',
         ),
-        'ebr-node_tags' => array(
-          'module' => 'ebr',
-          'delta' => 'node_tags',
+        'views-essay_gatherings-block' => array(
+          'module' => 'views',
+          'delta' => 'essay_gatherings-block',
           'region' => 'content-sidebar-right',
           'weight' => '-10',
         ),
@@ -120,11 +114,11 @@ function ebr_core_context_default_contexts() {
           'region' => 'content-sidebar-left',
           'weight' => '-10',
         ),
-        'views-featured_gathering-block' => array(
+        'views-current_gatherings-block' => array(
           'module' => 'views',
-          'delta' => 'featured_gathering-block',
+          'delta' => 'current_gatherings-block',
           'region' => 'content-sidebar-right',
-          'weight' => '-10',
+          'weight' => '-9',
         ),
       ),
     ),
@@ -181,6 +175,12 @@ function ebr_core_context_default_contexts() {
           'delta' => 'form',
           'region' => 'header-secondary',
           'weight' => '-7',
+        ),
+        'system-main' => array(
+          'module' => 'system',
+          'delta' => 'main',
+          'region' => 'content-primary',
+          'weight' => '-10',
         ),
         'ebr-ohp_logo' => array(
           'module' => 'ebr',
