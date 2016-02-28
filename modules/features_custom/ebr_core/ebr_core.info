@@ -5,7 +5,6 @@ package = Electronic Book Review
 version = 7.x-5.1
 dependencies[] = backup_migrate
 dependencies[] = blockify
-dependencies[] = clear_cache
 dependencies[] = comment
 dependencies[] = computed_field
 dependencies[] = contact
