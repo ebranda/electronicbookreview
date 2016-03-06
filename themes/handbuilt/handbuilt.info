@@ -60,3 +60,4 @@ stylesheets-conditional[lte IE 6][all][]  = css/ie6.css
 scripts[] = js/regions.js
 scripts[] = js/essay.js
 scripts[] = js/forms.js
+scripts[] = js/jquery.fullscreen.min.js

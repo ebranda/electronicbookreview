@@ -35,11 +35,9 @@ function _is_gloss($node) {
  * Sets up the node page for the entity being glossed
  */
 function ebr_glossing_preprocess_node(&$variables, $hook) {
-	
-  	$node = $variables['node'];
+  $node = $variables['node'];
 	global $glossable_node_types;
-  	if (_is_glossable($node) && $variables['view_mode'] == 'full') { // TOOD view_mode is specific to ebr.module. Generalize this.
-		
+  if (_is_glossable($node) && $variables['view_mode'] == 'full') {
 		$params = drupal_get_query_parameters();
 		$gloss_nid = empty($params['gloss']) ? 0 : $params['gloss'];
 		$settings = array(
@@ -53,7 +51,7 @@ function ebr_glossing_preprocess_node(&$variables, $hook) {
 		if (is_numeric($gloss_left)) {
 			$settings['glossLeft'] = $gloss_left;
 		}
-		drupal_add_js('scripts.js');
+		drupal_add_js(drupal_get_path('module', 'ebr_glossing') . '/scripts.js');
 		drupal_add_js(array('ebr_glossing' => $settings), 'setting');
 		$variables['classes_array'][] = 'glossable';
 		$glosses = _glosser_load_glosses($node->nid);

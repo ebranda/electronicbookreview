@@ -15,7 +15,29 @@ jQuery(document).ready(function() {
 	var essayNode = jQuery('#main .node-essay.full');
 	if (essayNode.length > 0) {
 		//jQuery("*", jQuery(".field-name-body", essayNode)).removeAttr("style"); // Strip out inline styles
-		processFullScreenIcon();
+		
+		//processFullScreenIcon();
+		
+		// Fullscreen functionality
+		// Add controls and enter/exit handling.
+		jQuery('.region-content-primary').prepend('<a href="#" class="fullscreen-enter fullscreen-controls">View full-screen</a>');
+		jQuery('.region-content-primary').prepend('<a href="#" class="fullscreen-exit fullscreen-controls">Exit full-screen</a>');
+		jQuery('.fullscreen-exit').hide();
+		jQuery('.fullscreen-enter').click(function() {
+			jQuery('#main').fullscreen({overflow:'auto'});
+			jQuery('.fullscreen-enter').hide();
+			jQuery('.fullscreen-exit').show();
+	        return false;
+	    });
+		jQuery('.fullscreen-exit').click(function() {
+			jQuery.fullscreen.exit();
+	        return false;
+		});
+		jQuery('#main').on('fscreenclose', function() {
+			jQuery('.fullscreen-exit').hide();
+			jQuery('.fullscreen-enter').show();
+		});
+		
 	}
 });
 
