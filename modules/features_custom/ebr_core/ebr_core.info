@@ -19,7 +19,6 @@ dependencies[] = ds_forms
 dependencies[] = ds_search
 dependencies[] = ds_ui
 dependencies[] = ebr
-dependencies[] = ebr_glossing
 dependencies[] = ebr_maintenance
 dependencies[] = ebr_title
 dependencies[] = emfield
