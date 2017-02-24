@@ -59,15 +59,7 @@ function ebr_glossing_preprocess_node(&$variables, $hook) {
 		$variables['content']['glosses']['#weight'] = intval($variables['content']['body']['#weight']) + 1;
 		
 		if (_ebr_allow_glossing($node)) {
-			//drupal_add_js(drupal_get_path('module', 'ebr_glossing') .'/rangy-core.js');
-			// Add a single empty gloss link base element to node content render array.
-			// The Dialog API requires that this be rendered, not output directly as HTML.
-			$variables['content']['add_gloss']['#attached']['library'] = array(array('dialog', 'dialog'));
-			$variables['content']['add_gloss']['link']['#markup'] = 
-				'<div id="gloss-add"></</div><div>&lt; '.
-				l('Write a gloss here', 'glosses/nojs/glossform', 
-					array('html' => true, 'attributes' => array('class' => array('use-dialog', 'use-ajax'))
-				)).'</div></div>';
+			_ebr_glossing_init_glossing($variables);
 		}
 		
 	} else if (_is_gloss($node)) {
@@ -83,6 +75,36 @@ function ebr_glossing_preprocess_node(&$variables, $hook) {
 		$path = $node->field_gloss_path['und'][0]['value'];
 		$variables['content']['path']['#markup'] = '<div class="gloss-path" style="display:none;">'.$path.'</div>'; 
 	}
+}
+
+function _ebr_glossing_init_glossing(&$variables) {
+	
+	// Load the modal library and add the modal javascript.
+	ctools_include('modal');
+	ctools_modal_add_js();
+	
+	// Create link html/js
+	$variables['content']['add_gloss']['link']['#markup'] = 
+		'<div id="gloss-add"><div>&lt; ' . l('Write a gloss here', 'glosses/nojs/glossform', array('attributes' => array('class' => array('ctools-use-modal', 'ctools-modal-gloss-form')))) . '</div></div>';
+	
+	// Style (additional customizations in css below)
+	drupal_add_js(array(
+		'gloss-form' => array(
+			'modalSize' => array(
+				'type' => 'fixed',
+				'width' => 600,
+				'height' => 'auto',
+			),
+			'modalOptions' => array(
+				'opacity' => (float) 0.8, // Backgroung opacity
+				'background-color' => '#000000', // Background color
+			),
+			'closeText' => '&times;',
+			'animation' => 'fadeIn',
+		),
+	), 'setting');
+	// Inject css to customize modal window
+	drupal_add_css(drupal_get_path('module', 'ebr_glossing') . '/modal.css');
 }
 
 function _glosser_load_glosses($nid) {
@@ -132,12 +154,12 @@ function ebr_glossing_menu() {
 	   'page arguments' => array(2, 3),
 	   'access arguments' => array('create gloss content'),
 	);
-	$items['glosses/%dialog_js/glossform'] = array(
+	$items['glosses/%ctools_js/glossform'] = array(
 	   'title' => 'Gloss form',
 	   'type' => MENU_CALLBACK,
-	   'page callback' => '_gloss_form_ajax_callback',
-	   'page arguments' => array(1, 3),
-	   'access arguments' => array('create gloss content'),
+	   'page callback' => '_gloss_form_callback',
+	   'page arguments' => array(1),
+	   'access callback' => TRUE,
 	);
 	$items['glosses/approve/%/%'] = array(
 	   'type' => MENU_CALLBACK,
@@ -147,6 +169,8 @@ function ebr_glossing_menu() {
 	);
 	return $items;
 }
+
+
 
 /**
  * Stores values received via an ajax call in the user session.
@@ -168,26 +192,30 @@ function _set_path_ajax_callback($nid, $path) {
  * Menu callback for creating our form via AJAX. This function
  * will call the drupal_get_form form builder function.
  */
-function _gloss_form_ajax_callback($ajax) {
+function _gloss_form_callback($ajax) {
 	$params = drupal_get_query_parameters();
 	$nid = $_SESSION['ebr_glossing']['nid']['#value'];
 	$path = $_SESSION['ebr_glossing']['path']['#value'];
-	$form = drupal_get_form('ebr_gloss_form', $nid, $path);
-  	// If we're using JavaScript, display the content within the dialog.
   	if ($ajax) {
-    	// Options that are passed to the jQuery UI dialog. See the jQuery UI
-	    // website for more available options: http://jqueryui.com/demos/dialog/
-	    $options = array(
-	      'width' => '600px',
-	      'position' => 'center',
-	      'title' => t('Add a gloss'),
-	    );
-	    $commands = array();
-	    $commands[] = dialog_command_display($form, $options);
-	    ajax_deliver(array('#type' => 'ajax', '#commands' => $commands));
+		ctools_include('ajax');
+		ctools_include('modal');
+		$form_state = array(
+			'ajax' => TRUE,
+			'title' => t('Add a gloss'),
+		);
+		$form_state['build_info']['args'] = array($nid, $path);
+		$output = ctools_modal_form_wrapper('ebr_gloss_form', $form_state);
+		// If the form has been submitted, there may be additional instructions
+    	// such as dismissing the modal popup.
+		if (!empty($form_state['ajax_commands'])) {
+	      $output = $form_state['ajax_commands'];
+	    }
+		// Return the ajax instructions to the browser via ajax_render().
+		print ajax_render($output);
+		drupal_exit();
   	} else {
     	// If the user isn't using JavaScript, just show the normal page.
-    	return $form;
+    	return drupal_get_form('ebr_gloss_form', $nid, $path);
   	}
 }
 
@@ -238,21 +266,18 @@ function ebr_gloss_form($form, &$form_state, $nid, $path) {
 							'The following text *is emphasized*'.
 							'</div>',
 		);
-		$form['submit'] = array(
+		
+		// Controls
+		$form['buttons'] = array(
+		  '#type' => container,
+		  '#weight' => 500,
+		  '#attributes' => array('class' => array('buttons')),
+		);
+		$form['buttons']['submit'] = array(
 			'#type' => 'submit',
 			'#value' => 'Submit gloss',
 		);
-		// Set up the ajax
-		$form['dialog_display'] = array('#type' => 'value', '#value' => TRUE);
-	    $form['#prefix'] = '<div id="dialog-form-wrapper">';
-	    $form['#suffix'] = '</div>';
-		$form['submit']['#ajax'] = array(
-	        'callback' => 'drupal_render',
-	        'wrapper' => 'dialog-form-wrapper',
-	    );
-		$form['#process'][] = 'dialog_process_ajax_form';
-		// Define the submit handler
-		$form['#submit'][] = 'ebr_ajax_gloss_form_submit';
+		$form['#submit'][] = 'ebr_gloss_form_submit';
 	} else { // Form was submitted to display the result message set in the submit handler
 		$form['submission'] = array(
 	    	'#markup' => $form_state['result_message'],
@@ -264,14 +289,14 @@ function ebr_gloss_form($form, &$form_state, $nid, $path) {
 /**
  * The form submit handler. Only gets called if validation passes.
  */
-function ebr_ajax_gloss_form_submit($form, &$form_state) {
+function ebr_gloss_form_submit($form, &$form_state) {
 	$nid = intval($form_state['values']['nid']);
 	$path = $form_state['values']['path'];
 	$name = $form_state['values']['name'];
 	$body = $form_state['values']['body'];
 	$body_html = _filter_markdown($body, 'default'); // Depends on the Markdown module
-	$gloss = _create_gloss($nid, $path, $name, $body_html);
 	$form_state['rebuild'] = TRUE;
+	$gloss = _create_gloss($nid, $path, $name, $body_html);
 	$node = node_load($nid);
 	$form_state['result_message'] = "The following gloss of <strong>".$node->title."</strong> has been submitted for review. We will get back to you shortly.";
 	$form_state['result_message'] .= '<div class="body">'.$body_html.'</div>';
@@ -283,7 +308,6 @@ function ebr_ajax_gloss_form_submit($form, &$form_state) {
  * Helper function to create the new gloss.
  */
 function _create_gloss($nid, $path, $author_name, $body) {
-	
 	// TODO this should be a hook because we will need to define the node type on the fly
 	$node = new stdClass();
 	global $gloss_node_type;
@@ -303,68 +327,11 @@ function _create_gloss($nid, $path, $author_name, $body) {
 	if ($node = node_submit($node)) {
 		node_save($node);
 	}
-	
-	// Now insert the marker into the target node body at the path location
-	// DON'T do this. It is destructive editing of the essay body.
-	// if (!empty($path)) {
-	// 		$gloss_nid = $node->nid;
-	// 		$target_node = node_load($nid);
-	// 		$altered = _insert_gloss_marker($path, $target_node->body['und'][0]['value'], $gloss_nid);
-	// 		$target_node->body['und'][0]['value'] = $altered;
-	// 		node_save($target_node);
-	// 	}
-	
 	return $node;
 }
 
-/*
-function _insert_gloss_marker($css_selector_path, $body, $nid) {
-	$segments = explode(' > ', $css_selector_path);
-	$dom = new DOMDocument();
-	$dom->loadXML('<root>'.$body.'</root>');
-	$node = $dom->getElementsByTagName('root')->item(0);
-	foreach ($segments as $segment) {
-		$node = _get_child_node($segment, $node);
-	}
-	$marker = $dom->createElement("span", $nid);
-	$marker->setAttribute('class', 'gloss-ref');
-	$marker->setAttribute('id', 'gloss-ref-'.$nid);
-	$node->appendChild($marker);
-	$xml = $dom->saveXML();
-	$xml = substr($xml, strpos($xml, '<root>')+6);
-	$xml = substr($xml, 0, strpos($xml, '</root>'));
-	return $xml;
-}
-
-function _get_child_node($css_selector, $dom_node) {
-	$element_name = substr($css_selector, 0, strpos($css_selector, ':'));
-	$index = intval(substr($css_selector, strpos($css_selector, '(')+1, strpos($css_selector, ')')));
-	if ($dom_node->childNodes->length) { 
-		$i = 1;
-		foreach($dom_node->childNodes as $n) { 
-			if (strtolower($n->nodeName) == strtolower($element_name)) {
-				if ($i == $index) return $n;
-				$i++;
-			}
-		}
-	}
-}
-*/
-
-// function _glossing_insert_reference($html, $path, $gloss_nid) {
-// 	$pre = substr($html, 0, $path);
-// 	if (strrpos($pre, '>') < strrpos($pre, '<')) {
-// 		// We are inside an html tag so shift backward to the start of the tag.
-// 		$path = strrpos($pre, '<');
-// 		$pre = substr($html, 0, $path);
-// 	}
-// 	$post = substr($html, $path);
-// 	return $pre . '<span class="gloss-ref" id="gloss-ref-'.$gloss_nid.'">'.$gloss_nid.'</span>' . $post;
-// }
-
-
 /**
- * Implements hook_menu().
+ * Implements hook_node_delete().
  */
 function ebr_glossing_node_delete($node) {
 	if (_is_glossable($node)) {

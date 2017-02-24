@@ -1,0 +1,34 @@
+/* CTools modal dialog customizations */
+
+div.ctools-modal-content {
+	padding:15px 20px 20px 20px;
+	background-color:white;
+}
+
+div.ctools-modal-content .modal-header {
+	background-color:none;
+	font-weight:bold;
+	font-size: 1.2em;
+	padding-bottom:20px;
+}
+
+div.ctools-modal-content .modal-header .close {
+	float:right;
+	font-size:2em;
+	color:#999;
+	margin-top:-5px;
+	margin-left:5px;
+}
+
+div.ctools-modal-content .modal-header .close img {
+	display:none;
+}
+
+div.ctools-modal-content .modal-content .buttons {
+	padding-top:20px;
+	text-align:center;
+}
+
+div.ctools-modal-content .modal-content .buttons input {
+	font-size:1.5em;
+}
