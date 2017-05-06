@@ -1103,6 +1103,14 @@
 	display:block;
 }
 
+/* jQuery Expander 'More' links */
+.node-gathering .field-name-body a.more-link {
+	display:block;
+	text-align:left;
+}
+
+
+
 /*
 
 #full-screen-link {
